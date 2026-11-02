@@ -1,0 +1,615 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://www.plcopen.org/xml/tc6_0200">
+  <fileHeader companyName="Beckhoff Automation GmbH" productName="TwinCAT PLC Control" productVersion="3.5.21.61" creationDateTime="2026-11-02T21:43:06.0283559" />
+  <contentHeader name="PLC" modificationDateTime="2026-11-02T21:43:06.0322484">
+    <coordinateInfo>
+      <fbd>
+        <scaling x="1" y="1" />
+      </fbd>
+      <ld>
+        <scaling x="1" y="1" />
+      </ld>
+      <sfc>
+        <scaling x="1" y="1" />
+      </sfc>
+    </coordinateInfo>
+    <addData>
+      <data name="http://www.3s-software.com/plcopenxml/projectinformation" handleUnknown="implementation">
+        <ProjectInformation />
+      </data>
+    </addData>
+  </contentHeader>
+  <types>
+    <dataTypes />
+    <pous>
+      <pou name="FB_Dynamic" pouType="functionBlock">
+        <interface>
+          <localVars>
+            <variable name="nCounts">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK FB_Dynamic
+VAR
+    nCounts : INT;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </localVars>
+          <addData>
+            <data name="http://www.3s-software.com/plcopenxml/attributes" handleUnknown="implementation">
+              <Attributes>
+                <Attribute Name="enable_dynamic_creation" Value="" />
+              </Attributes>
+            </data>
+          </addData>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml" />
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/method" handleUnknown="implementation">
+            <Method name="Increase" ObjectId="ef4ca4c5-48cb-4ca8-9490-f1291786189c">
+              <interface>
+                <returnType>
+                  <INT />
+                </returnType>
+                <inputVars>
+                  <variable name="nCountStep">
+                    <type>
+                      <INT />
+                    </type>
+                  </variable>
+                  <addData>
+                    <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                      <InterfaceAsPlainText>
+                        <xhtml xmlns="http://www.w3.org/1999/xhtml">METHOD Increase : INT
+VAR_INPUT
+	nCountStep :INT;
+END_VAR
+</xhtml>
+                      </InterfaceAsPlainText>
+                    </data>
+                  </addData>
+                </inputVars>
+              </interface>
+              <body>
+                <ST>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">nCounts := nCounts + nCountStep;
+Increase := nCounts;</xhtml>
+                </ST>
+              </body>
+              <InterfaceAsPlainText>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml">METHOD Increase : INT
+VAR_INPUT
+	nCountStep :INT;
+END_VAR
+</xhtml>
+              </InterfaceAsPlainText>
+              <addData />
+            </Method>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK FB_Dynamic
+VAR
+    nCounts : INT;
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>1a9f2f1f-3aa5-4017-8184-8fb8a4cd4490</ObjectId>
+          </data>
+        </addData>
+      </pou>
+      <pou name="MAIN" pouType="program">
+        <interface />
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">//monoInstance();
+multiInstances();</xhtml>
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM MAIN
+VAR
+
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>002d4d91-a16b-4be8-8a19-dfe7075eb4e7</ObjectId>
+          </data>
+        </addData>
+      </pou>
+      <pou name="monoInstance" pouType="program">
+        <interface>
+          <localVars>
+            <variable name="pFB">
+              <type>
+                <pointer>
+                  <baseType>
+                    <derived name="FB_Dynamic" />
+                  </baseType>
+                </pointer>
+              </type>
+            </variable>
+            <variable name="nResult">
+              <type>
+                <INT />
+              </type>
+            </variable>
+            <variable name="nIncrease">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="5" />
+              </initialValue>
+            </variable>
+            <variable name="bNew">
+              <type>
+                <BOOL />
+              </type>
+              <initialValue>
+                <simpleValue value="TRUE" />
+              </initialValue>
+            </variable>
+            <variable name="bDelete">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="fbGetRouterStatusInfo">
+              <type>
+                <derived name="FB_GetRouterStatusInfo" />
+              </type>
+            </variable>
+            <variable name="TonGetRouterStatus">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="bError">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="nErrorID">
+              <type>
+                <UDINT />
+              </type>
+            </variable>
+            <variable name="stTcRouterStatusInfo">
+              <type>
+                <derived name="Tc2_Utilities.ST_TcRouterStatusInfo" />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM monoInstance
+VAR
+		pFB       : POINTER TO FB_Dynamic;
+    nResult   : INT;
+    nIncrease : INT := 5;
+    bNew      : BOOL := TRUE;
+    bDelete   : BOOL;
+	
+	fbGetRouterStatusInfo:FB_GetRouterStatusInfo;
+	TonGetRouterStatus:TON;
+	bError: BOOL;
+	nErrorID: UDINT;
+	stTcRouterStatusInfo: Tc2_Utilities.ST_TcRouterStatusInfo;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">IF bNew AND (pFB = 0) THEN
+    pFB := __NEW(FB_Dynamic);
+    bNew := FALSE;
+END_IF
+
+IF (pFB &lt;&gt; 0) THEN
+    nResult := pFB^.Increase(nCountStep := nIncrease);
+END_IF
+
+IF bDelete THEN
+    __DELETE(pFB);
+    bDelete := FALSE;
+END_IF
+
+
+fbGetRouterStatusInfo(
+	sNetId:= '', 
+	bExecute:= NOT TonGetRouterStatus.Q, 
+	tTimeout:= DEFAULT_ADS_TIMEOUT, 
+	bBusy=&gt; , 
+	bError=&gt; bError, 
+	nErrID=&gt; nErrorID, 
+	info=&gt; stTcRouterStatusInfo);
+	
+TonGetRouterStatus(IN:= NOT fbGetRouterStatusInfo.bBusy, PT:=T#1S , Q=&gt; , ET=&gt; );</xhtml>
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM monoInstance
+VAR
+		pFB       : POINTER TO FB_Dynamic;
+    nResult   : INT;
+    nIncrease : INT := 5;
+    bNew      : BOOL := TRUE;
+    bDelete   : BOOL;
+	
+	fbGetRouterStatusInfo:FB_GetRouterStatusInfo;
+	TonGetRouterStatus:TON;
+	bError: BOOL;
+	nErrorID: UDINT;
+	stTcRouterStatusInfo: Tc2_Utilities.ST_TcRouterStatusInfo;
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>26ed2cdf-26da-466f-b7e2-6212e58ba767</ObjectId>
+          </data>
+        </addData>
+      </pou>
+      <pou name="multiInstances" pouType="program">
+        <interface>
+          <localVars constant="true">
+            <variable name="cMaxInstances">
+              <type>
+                <UINT />
+              </type>
+              <initialValue>
+                <simpleValue value="1000" />
+              </initialValue>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> passer à 100, puis 1000 pour tester les limites</xhtml>
+              </documentation>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM multiInstances
+VAR CONSTANT
+    cMaxInstances : UINT := 1000;      // passer à 100, puis 1000 pour tester les limites
+END_VAR
+VAR
+    // Tableau de pointeurs (aucune instance n'est créée statiquement)
+    aFB            : ARRAY[1..cMaxInstances] OF POINTER TO FB_Dynamic;
+    aResult        : ARRAY[1..cMaxInstances] OF INT;
+
+    // Commande
+    nTarget        : UINT := 10;     // nombre d'instances souhaité (modifiable en ligne)
+    nMaxOpsPerCycle: UINT := 50;     // limite de __NEW/__DELETE par cycle
+    nIncrease      : INT := 5;
+
+    // Diagnostic
+    nActive        : UINT;           // instances actuellement créées
+    nNewFailed     : UDINT;          // nombre d'échecs de __NEW
+    bAllocError    : BOOL;
+
+    // Variables locales de travail
+    i              : UINT;
+    nOps           : UINT;
+
+    // Surveillance du router (ton code existant)
+    fbGetRouterStatusInfo : FB_GetRouterStatusInfo;
+    TonGetRouterStatus    : TON;
+    bError                : BOOL;
+    nErrorID              : UDINT;
+    stTcRouterStatusInfo  : Tc2_Utilities.ST_TcRouterStatusInfo;
+	nUsage: REAL;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </localVars>
+          <localVars>
+            <variable name="aFB">
+              <type>
+                <array>
+                  <dimension lower="1" upper="cMaxInstances" />
+                  <baseType>
+                    <pointer>
+                      <baseType>
+                        <derived name="FB_Dynamic" />
+                      </baseType>
+                    </pointer>
+                  </baseType>
+                </array>
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Tableau de pointeurs (aucune instance n'est créée statiquement)</xhtml>
+              </documentation>
+            </variable>
+            <variable name="aResult">
+              <type>
+                <array>
+                  <dimension lower="1" upper="cMaxInstances" />
+                  <baseType>
+                    <INT />
+                  </baseType>
+                </array>
+              </type>
+            </variable>
+            <variable name="nTarget">
+              <type>
+                <UINT />
+              </type>
+              <initialValue>
+                <simpleValue value="10" />
+              </initialValue>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> nombre d'instances souhaité (modifiable en ligne)</xhtml>
+              </documentation>
+            </variable>
+            <variable name="nMaxOpsPerCycle">
+              <type>
+                <UINT />
+              </type>
+              <initialValue>
+                <simpleValue value="50" />
+              </initialValue>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> limite de __NEW/__DELETE par cycle</xhtml>
+              </documentation>
+            </variable>
+            <variable name="nIncrease">
+              <type>
+                <INT />
+              </type>
+              <initialValue>
+                <simpleValue value="5" />
+              </initialValue>
+            </variable>
+            <variable name="nActive">
+              <type>
+                <UINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> instances actuellement créées</xhtml>
+              </documentation>
+            </variable>
+            <variable name="nNewFailed">
+              <type>
+                <UDINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> nombre d'échecs de __NEW</xhtml>
+              </documentation>
+            </variable>
+            <variable name="bAllocError">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="i">
+              <type>
+                <UINT />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Variables locales de travail</xhtml>
+              </documentation>
+            </variable>
+            <variable name="nOps">
+              <type>
+                <UINT />
+              </type>
+            </variable>
+            <variable name="fbGetRouterStatusInfo">
+              <type>
+                <derived name="FB_GetRouterStatusInfo" />
+              </type>
+              <documentation>
+                <xhtml xmlns="http://www.w3.org/1999/xhtml"> Surveillance du router (ton code existant)</xhtml>
+              </documentation>
+            </variable>
+            <variable name="TonGetRouterStatus">
+              <type>
+                <derived name="TON" />
+              </type>
+            </variable>
+            <variable name="bError">
+              <type>
+                <BOOL />
+              </type>
+            </variable>
+            <variable name="nErrorID">
+              <type>
+                <UDINT />
+              </type>
+            </variable>
+            <variable name="stTcRouterStatusInfo">
+              <type>
+                <derived name="Tc2_Utilities.ST_TcRouterStatusInfo" />
+              </type>
+            </variable>
+            <variable name="nUsage">
+              <type>
+                <REAL />
+              </type>
+            </variable>
+            <addData>
+              <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+                <InterfaceAsPlainText>
+                  <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM multiInstances
+VAR CONSTANT
+    cMaxInstances : UINT := 1000;      // passer à 100, puis 1000 pour tester les limites
+END_VAR
+VAR
+    // Tableau de pointeurs (aucune instance n'est créée statiquement)
+    aFB            : ARRAY[1..cMaxInstances] OF POINTER TO FB_Dynamic;
+    aResult        : ARRAY[1..cMaxInstances] OF INT;
+
+    // Commande
+    nTarget        : UINT := 10;     // nombre d'instances souhaité (modifiable en ligne)
+    nMaxOpsPerCycle: UINT := 50;     // limite de __NEW/__DELETE par cycle
+    nIncrease      : INT := 5;
+
+    // Diagnostic
+    nActive        : UINT;           // instances actuellement créées
+    nNewFailed     : UDINT;          // nombre d'échecs de __NEW
+    bAllocError    : BOOL;
+
+    // Variables locales de travail
+    i              : UINT;
+    nOps           : UINT;
+
+    // Surveillance du router (ton code existant)
+    fbGetRouterStatusInfo : FB_GetRouterStatusInfo;
+    TonGetRouterStatus    : TON;
+    bError                : BOOL;
+    nErrorID              : UDINT;
+    stTcRouterStatusInfo  : Tc2_Utilities.ST_TcRouterStatusInfo;
+	nUsage: REAL;
+END_VAR
+</xhtml>
+                </InterfaceAsPlainText>
+              </data>
+            </addData>
+          </localVars>
+        </interface>
+        <body>
+          <ST>
+            <xhtml xmlns="http://www.w3.org/1999/xhtml">// --- 1. Ajustement du nombre d'instances vers nTarget ---
+nTarget := LIMIT(0, nTarget, cMaxInstances);
+nOps    := 0;
+
+FOR i := 1 TO cMaxInstances DO
+    IF nOps &gt;= nMaxOpsPerCycle THEN
+        EXIT;                              // on étale la charge sur plusieurs cycles
+    END_IF
+
+    IF i &lt;= nTarget THEN
+        // Instance souhaitée : on la crée si elle n'existe pas
+        IF aFB[i] = 0 THEN
+            aFB[i] := __NEW(FB_Dynamic);
+            nOps := nOps + 1;
+            IF aFB[i] = 0 THEN             // __NEW renvoie 0 si plus de mémoire
+                nNewFailed  := nNewFailed + 1;
+                bAllocError := TRUE;
+                EXIT;
+            END_IF
+        END_IF
+    ELSE
+        // Instance en trop : on la détruit
+        IF aFB[i] &lt;&gt; 0 THEN
+            __DELETE(aFB[i]);
+            aFB[i] := 0;                   // indispensable
+            nOps := nOps + 1;
+        END_IF
+    END_IF
+END_FOR
+
+// --- 2. Appel cyclique des instances existantes ---
+nActive := 0;
+FOR i := 1 TO cMaxInstances DO
+    IF aFB[i] &lt;&gt; 0 THEN
+        aResult[i] := aFB[i]^.Increase(nCountStep := nIncrease);
+        nActive    := nActive + 1;
+    END_IF
+END_FOR
+
+// --- 3. Surveillance du router (inchangé) ---
+fbGetRouterStatusInfo(
+    sNetId   := '',
+    bExecute := NOT TonGetRouterStatus.Q,
+    tTimeout := DEFAULT_ADS_TIMEOUT,
+    bBusy    =&gt; ,
+    bError   =&gt; bError,
+    nErrID   =&gt; nErrorID,
+    info     =&gt; stTcRouterStatusInfo);
+
+TonGetRouterStatus(IN := NOT fbGetRouterStatusInfo.bBusy, PT := T#1S);
+
+nUsage:=(TO_REAL(stTcRouterStatusInfo.maxMem-stTcRouterStatusInfo.maxMemAvail)/TO_REAL(stTcRouterStatusInfo.maxMem))*100.0;
+</xhtml>
+          </ST>
+        </body>
+        <addData>
+          <data name="http://www.3s-software.com/plcopenxml/interfaceasplaintext" handleUnknown="implementation">
+            <InterfaceAsPlainText>
+              <xhtml xmlns="http://www.w3.org/1999/xhtml">PROGRAM multiInstances
+VAR CONSTANT
+    cMaxInstances : UINT := 1000;      // passer à 100, puis 1000 pour tester les limites
+END_VAR
+VAR
+    // Tableau de pointeurs (aucune instance n'est créée statiquement)
+    aFB            : ARRAY[1..cMaxInstances] OF POINTER TO FB_Dynamic;
+    aResult        : ARRAY[1..cMaxInstances] OF INT;
+
+    // Commande
+    nTarget        : UINT := 10;     // nombre d'instances souhaité (modifiable en ligne)
+    nMaxOpsPerCycle: UINT := 50;     // limite de __NEW/__DELETE par cycle
+    nIncrease      : INT := 5;
+
+    // Diagnostic
+    nActive        : UINT;           // instances actuellement créées
+    nNewFailed     : UDINT;          // nombre d'échecs de __NEW
+    bAllocError    : BOOL;
+
+    // Variables locales de travail
+    i              : UINT;
+    nOps           : UINT;
+
+    // Surveillance du router (ton code existant)
+    fbGetRouterStatusInfo : FB_GetRouterStatusInfo;
+    TonGetRouterStatus    : TON;
+    bError                : BOOL;
+    nErrorID              : UDINT;
+    stTcRouterStatusInfo  : Tc2_Utilities.ST_TcRouterStatusInfo;
+	nUsage: REAL;
+END_VAR
+</xhtml>
+            </InterfaceAsPlainText>
+          </data>
+          <data name="http://www.3s-software.com/plcopenxml/objectid" handleUnknown="discard">
+            <ObjectId>1e2ae593-cdcb-44fa-a903-53925ef527dd</ObjectId>
+          </data>
+        </addData>
+      </pou>
+    </pous>
+  </types>
+  <instances>
+    <configurations />
+  </instances>
+  <addData>
+    <data name="http://www.3s-software.com/plcopenxml/projectstructure" handleUnknown="discard">
+      <ProjectStructure>
+        <Folder Name="POUs">
+          <Object Name="FB_Dynamic" ObjectId="1a9f2f1f-3aa5-4017-8184-8fb8a4cd4490">
+            <Object Name="Increase" ObjectId="ef4ca4c5-48cb-4ca8-9490-f1291786189c" />
+          </Object>
+          <Object Name="MAIN" ObjectId="002d4d91-a16b-4be8-8a19-dfe7075eb4e7" />
+          <Object Name="monoInstance" ObjectId="26ed2cdf-26da-466f-b7e2-6212e58ba767" />
+          <Object Name="multiInstances" ObjectId="1e2ae593-cdcb-44fa-a903-53925ef527dd" />
+        </Folder>
+      </ProjectStructure>
+    </data>
+  </addData>
+</project>

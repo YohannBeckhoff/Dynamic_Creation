@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.21">
+  <POU Name="FB_Dynamic" Id="{1a9f2f1f-3aa5-4017-8184-8fb8a4cd4490}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'enable_dynamic_creation'}
+FUNCTION_BLOCK FB_Dynamic
+VAR
+    nCounts : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Increase" Id="{ef4ca4c5-48cb-4ca8-9490-f1291786189c}">
+      <Declaration><![CDATA[METHOD Increase : INT
+VAR_INPUT
+	nCountStep :INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[nCounts := nCounts + nCountStep;
+Increase := nCounts;]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

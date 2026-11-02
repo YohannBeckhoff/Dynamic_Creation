@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.21">
+  <POU Name="multiInstances" Id="{1e2ae593-cdcb-44fa-a903-53925ef527dd}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM multiInstances
+VAR CONSTANT
+    cMaxInstances : UINT := 1000;      // passer à 100, puis 1000 pour tester les limites
+END_VAR
+VAR
+    // Tableau de pointeurs (aucune instance n'est créée statiquement)
+    aFB            : ARRAY[1..cMaxInstances] OF POINTER TO FB_Dynamic;
+    aResult        : ARRAY[1..cMaxInstances] OF INT;
+
+    // Commande
+    nTarget        : UINT := 10;     // nombre d'instances souhaité (modifiable en ligne)
+    nMaxOpsPerCycle: UINT := 50;     // limite de __NEW/__DELETE par cycle
+    nIncrease      : INT := 5;
+
+    // Diagnostic
+    nActive        : UINT;           // instances actuellement créées
+    nNewFailed     : UDINT;          // nombre d'échecs de __NEW
+    bAllocError    : BOOL;
+
+    // Variables locales de travail
+    i              : UINT;
+    nOps           : UINT;
+
+    // Surveillance du router (ton code existant)
+    fbGetRouterStatusInfo : FB_GetRouterStatusInfo;
+    TonGetRouterStatus    : TON;
+    bError                : BOOL;
+    nErrorID              : UDINT;
+    stTcRouterStatusInfo  : Tc2_Utilities.ST_TcRouterStatusInfo;
+	nUsage: REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[// --- 1. Ajustement du nombre d'instances vers nTarget ---
+nTarget := LIMIT(0, nTarget, cMaxInstances);
+nOps    := 0;
+
+FOR i := 1 TO cMaxInstances DO
+    IF nOps >= nMaxOpsPerCycle THEN
+        EXIT;                              // on étale la charge sur plusieurs cycles
+    END_IF
+
+    IF i <= nTarget THEN
+        // Instance souhaitée : on la crée si elle n'existe pas
+        IF aFB[i] = 0 THEN
+            aFB[i] := __NEW(FB_Dynamic);
+            nOps := nOps + 1;
+            IF aFB[i] = 0 THEN             // __NEW renvoie 0 si plus de mémoire
+                nNewFailed  := nNewFailed + 1;
+                bAllocError := TRUE;
+                EXIT;
+            END_IF
+        END_IF
+    ELSE
+        // Instance en trop : on la détruit
+        IF aFB[i] <> 0 THEN
+            __DELETE(aFB[i]);
+            aFB[i] := 0;                   // indispensable
+            nOps := nOps + 1;
+        END_IF
+    END_IF
+END_FOR
+
+// --- 2. Appel cyclique des instances existantes ---
+nActive := 0;
+FOR i := 1 TO cMaxInstances DO
+    IF aFB[i] <> 0 THEN
+        aResult[i] := aFB[i]^.Increase(nCountStep := nIncrease);
+        nActive    := nActive + 1;
+    END_IF
+END_FOR
+
+// --- 3. Surveillance du router (inchangé) ---
+fbGetRouterStatusInfo(
+    sNetId   := '',
+    bExecute := NOT TonGetRouterStatus.Q,
+    tTimeout := DEFAULT_ADS_TIMEOUT,
+    bBusy    => ,
+    bError   => bError,
+    nErrID   => nErrorID,
+    info     => stTcRouterStatusInfo);
+
+TonGetRouterStatus(IN := NOT fbGetRouterStatusInfo.bBusy, PT := T#1S);
+
+nUsage:=(TO_REAL(stTcRouterStatusInfo.maxMem-stTcRouterStatusInfo.maxMemAvail)/TO_REAL(stTcRouterStatusInfo.maxMem))*100.0;
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

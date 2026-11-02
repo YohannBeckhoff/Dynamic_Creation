@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4026.21">
+  <POU Name="monoInstance" Id="{26ed2cdf-26da-466f-b7e2-6212e58ba767}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM monoInstance
+VAR
+		pFB       : POINTER TO FB_Dynamic;
+    nResult   : INT;
+    nIncrease : INT := 5;
+    bNew      : BOOL := TRUE;
+    bDelete   : BOOL;
+	
+	fbGetRouterStatusInfo:FB_GetRouterStatusInfo;
+	TonGetRouterStatus:TON;
+	bError: BOOL;
+	nErrorID: UDINT;
+	stTcRouterStatusInfo: Tc2_Utilities.ST_TcRouterStatusInfo;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bNew AND (pFB = 0) THEN
+    pFB := __NEW(FB_Dynamic);
+    bNew := FALSE;
+END_IF
+
+IF (pFB <> 0) THEN
+    nResult := pFB^.Increase(nCountStep := nIncrease);
+END_IF
+
+IF bDelete THEN
+    __DELETE(pFB);
+    bDelete := FALSE;
+END_IF
+
+
+fbGetRouterStatusInfo(
+	sNetId:= '', 
+	bExecute:= NOT TonGetRouterStatus.Q, 
+	tTimeout:= DEFAULT_ADS_TIMEOUT, 
+	bBusy=> , 
+	bError=> bError, 
+	nErrID=> nErrorID, 
+	info=> stTcRouterStatusInfo);
+	
+TonGetRouterStatus(IN:= NOT fbGetRouterStatusInfo.bBusy, PT:=T#1S , Q=> , ET=> );]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

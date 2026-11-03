@@ -84,9 +84,9 @@ fbGetRouterStatusInfo(
     info     => stTcRouterStatusInfo);
 
 TonGetRouterStatus(IN := NOT fbGetRouterStatusInfo.bBusy, PT := T#1S);
-
+IF stTcRouterStatusInfo.maxMem >0 THEN
 nUsage:=(TO_REAL(stTcRouterStatusInfo.maxMem-stTcRouterStatusInfo.maxMemAvail)/TO_REAL(stTcRouterStatusInfo.maxMem))*100.0;
-]]></ST>
+END_IF]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

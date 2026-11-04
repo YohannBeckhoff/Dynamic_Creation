@@ -3,7 +3,25 @@
   <POU Name="MAIN" Id="{002d4d91-a16b-4be8-8a19-dfe7075eb4e7}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-
+(*
++--------------------------------------------------------------------------+
+| PROGRAMME DE TEST - CREATION DYNAMIQUE (__NEW / __DELETE)                |
+| TwinCAT 3 - IEC 61131-3 - Structured Text                                |
++--------------------------------------------------------------------------+
+|                                                                          |
+| Projet d'exemple TwinCAT 3 illustrant la creation et la destruction      |
+| dynamiques d'instances de bloc fonction (FB) pendant l'execution du      |
+| PLC, avec les operateurs __NEW et __DELETE.                              |
+|                                                                          |
++--------------------------------------------------------------------------+
+| monoInstance                                                             |
+|   -> Creer / detruire une seule instance de FB_Dynamic                   |
++--------------------------------------------------------------------------+
+| multiInstances                                                           |
+|   -> Gerer un nombre dynamique d'instances (de 0 a cMaxInstances),       |
+|      ajustable en ligne, avec suivi de la memoire du router              |
++--------------------------------------------------------------------------+
+*)
 END_VAR
 ]]></Declaration>
     <Implementation>

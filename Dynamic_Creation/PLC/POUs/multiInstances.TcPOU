@@ -31,6 +31,8 @@ VAR
     nErrorID              : UDINT;
     stTcRouterStatusInfo  : Tc2_Utilities.ST_TcRouterStatusInfo;
 	nUsage: REAL;
+	bInc: BOOL;
+	bDec: BOOL;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -84,8 +86,19 @@ fbGetRouterStatusInfo(
     info     => stTcRouterStatusInfo);
 
 TonGetRouterStatus(IN := NOT fbGetRouterStatusInfo.bBusy, PT := T#1S);
+
 IF stTcRouterStatusInfo.maxMem >0 THEN
 nUsage:=(TO_REAL(stTcRouterStatusInfo.maxMem-stTcRouterStatusInfo.maxMemAvail)/TO_REAL(stTcRouterStatusInfo.maxMem))*100.0;
+END_IF
+
+IF bInc AND nTarget<cMaxInstances THEN
+	nTarget:=nTarget+1;
+	bInc:=FALSE;
+END_IF
+
+IF bDec  AND nTarget>1 THEN
+	nTarget:=nTarget-1;
+	bDec:=FALSE;
 END_IF]]></ST>
     </Implementation>
   </POU>

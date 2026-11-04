@@ -3,7 +3,7 @@
   <POU Name="monoInstance" Id="{26ed2cdf-26da-466f-b7e2-6212e58ba767}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM monoInstance
 VAR
-		pFB       : POINTER TO FB_Dynamic;
+	pFB       : POINTER TO FB_Dynamic;
     nResult   : INT;
     nIncrease : INT := 5;
     bNew      : BOOL := TRUE;
@@ -40,8 +40,12 @@ fbGetRouterStatusInfo(
 	bError=> bError, 
 	nErrID=> nErrorID, 
 	info=> stTcRouterStatusInfo);
-	
-TonGetRouterStatus(IN:= NOT fbGetRouterStatusInfo.bBusy, PT:=T#1S , Q=> , ET=> );]]></ST>
+
+IF stTcRouterStatusInfo.maxMem >0 THEN
+	TonGetRouterStatus(IN:= NOT fbGetRouterStatusInfo.bBusy, PT:=T#1S , Q=> , ET=> );
+END_IF
+
+]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
